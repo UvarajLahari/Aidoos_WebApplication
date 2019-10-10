@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Travel Guide</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+table, th, td {
+	background-color: rgba(0,0,0,0.8);
+  border: 1px solid white;
+  border-collapse: collapse;
+  color:rgb(255, 102, 0);
+}
+</style>
+
+<script>
+// Script to open and close sidebar
+
+var date = '{{w_date}}'.replace(/&#39;/g, "'");
+date= date.substring(0, date.length-1);
+date = String(date);
+date= date.split(",");
+//document.write(date)
+var tempList = '{{flight}}'.replace(/&#39;/g, "'");
+//var tempList = tempList[1:tempList.length-1];
+tempList= tempList.substring(0, tempList.length-1);
+tempList = String(tempList);
+tempList= tempList.split(",");
+
+var cost = {{cost}};
+var time = {{time}};
+var stop  = {{stop}};
+var temp={{temp}};
+var hum = {{hum}};
+var pre = {{pre}};
+var final_list=new Array(cost.length);
+var final_list1=new Array(cost.length);
+var final_list2=new Array(cost.length);
+var w_list=new Array(temp.length);
+var w_list1=new Array(temp.length);
+var w_list2=new Array(temp.length);
+var w_list3=new Array(temp.length);
+for(i=0;i<cost.length;i++){
+    str = tempList[i].substring(4, tempList[i].length-2);
+    dict={}
+    dict["x"]=i+1;
+    dict["y"]=cost[i];
+    dict["label"]=str;
+    final_list[i]=dict;
+}
+for(i=0;i<cost.length;i++){
+    str = tempList[i].substring(4, tempList[i].length-2);
+    dict={}
+    dict["x"]=i+1;
+    dict["y"]=time[i];
+    dict["label"]=str;
+    final_list1[i]=dict;
+}
+for(i=0;i<cost.length;i++){
+    str = tempList[i].substring(4, tempList[i].length-2);
+    dict={}
+    dict["x"]=i+1;
+    dict["y"]=stop[i];
+    dict["label"]=str;
+    final_list2[i]=dict;
+}
+for(i=0;i<temp.length;i++){
+    str = date[i].substring(2, date[i].length-1);
+    dict={}
+    dict["x"]=i+1;
+    dict["y"]=temp[i];
+    dict["label"]=str;
+    w_list[i]=dict;
+   
+}
+for(i=0;i<temp.length;i++){
+    str = date[i].substring(2, date[i].length-1);
+    dict={}
+    dict["x"]=i+1;
+    dict["y"]=hum[i];
+    dict["label"]=str;
+    w_list1[i]=dict;
+   
+}
+for(i=0;i<temp.length;i++){
+    str = date[i].substring(2, date[i].length-1);
+    dict={}
+    dict["x"]=i+1;
+    dict["y"]=pre[i];
+    dict["label"]=str;
+    w_list2[i]=dict;
+   
+}
+var Temp=w_list;
+var Hum = w_list1;
+var Pre = w_list2;
+var price=final_list;
+var time_taken=final_list1;
+var wait = final_list2;
+window.onload = function () {
+	var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+    var day = currentDate.getDate()
+    var month = currentDate.getMonth() + 1
+    var year = currentDate.getFullYear()
+    if (parseInt(day)<10){
+      day = "0"+day 
+    }
+    
+    d= year + "-" + month + "-" + day 
+    //document.write(d,'2019-10-07'== d)
+    document.getElementById("Test_Date").min= d;
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	title:{
+        text: "Flights - Prices\n",
+        //fontFamily: "Raleway",
+        fontColor: "rgba(255,255,255,1)",
+        fontSize:20
+
+      },
+    animationEnabled: true,
+    backgroundColor: "rgba(0,0,0,0.9)", 
+    //theme: "light2", // "light1", "light2", "dark1", "dark2"
+    type:"bar",
+    axisY:{
+    	prefix: "$",
+        includeZero: false,
+        labelFontColor: "rgba(0, 128, 128,1)" ,
+        lineColor: "rgba(0, 128, 128,1)" ,
+        lineThickness: 3
+      }, 
+    axisX:{
+            
+            //valueFormatString: "####",
+           // interval: 1,
+           stacked: true,
+            display:false,
+            labelFontColor: "rgba(0,0,0,0)"
+        },
+        legend: {
+       fontColor: "white"
+     },
+    data: [{
+        type: "column",
+        color:"rgba(0, 128, 128,1)",
+        backgroundColor: "rgba(0,0,0,0.2)",
+        legendText: "Price($)",
+        //yValueFormatString: "#,##0.0#\"%\"",
+        toolTipContent: "<strong>{label}</strong> <br/> Price : ${y}",
+        dataPoints: price
+    }]
+});
+chart.render();
+var chart = new CanvasJS.Chart("chartContainer2",{   
+		title:{
+        text: "Flights - Price - Time - Stops",
+        //fontFamily: "Raleway",
+        fontColor: "rgba(255,255,255,1)",
+        fontSize:20
+
+      },
+      legend: {
+       fontColor: "white"
+     },
+		backgroundColor: "rgba(0,0,0,0.9)",            
+        
+        toolTip: {
+        shared: true
+      },
+        axisX:{
+           
+            valueFormatString: "####",
+           // interval: 1,
+            display:false,
+           labelFontColor: "rgba(0,0,0,0)"
+        },
+        axisY:[{
+
+            
+            lineColor: "rgba(230, 92, 0,1)", 
+            titleFontColor: "rgba(230, 92, 0,1)",
+            labelFontColor: "rgba(230, 92, 0,1)"
+        },
+        {
+            
+            //logarithmic: true,
+            lineColor: "rgb(230, 230, 0)",
+            titleFontColor: "rgb(230, 230, 0)",
+            labelFontColor: "rgb(230, 230, 0)",
+            //"rgba(230, 92, 0,1)",
+        }],
+        axisY2:[{
+            prefix: "$",
+            lineColor: "rgba(0, 153, 153,1)",
+            titleFontColor: "rgba(0, 153, 153,1)",
+            labelFontColor: "rgba(0, 153, 153,1)"
+        }],
+
+    data: [
+    {
+        type: "column",
+        showInLegend: true,
+        color:"rgba(230, 92, 0,1)",
+        legendText: "Duration",
+        //axisYIndex: 0, //Defaults to Zero
+        name: "Axis Y-1",
+        toolTipContent: "<strong>{label}</strong> <br/> Duration : {y}Hrs",
+        xValueFormatString: "####",
+        dataPoints: time_taken
+    },
+    {
+        type: "spline",
+        showInLegend: true,
+        color:"rgb(230, 230, 0)",
+        legendText: "Stops",
+        toolTipContent: "Stops : {y}",
+        axisYIndex: 1, //Defaults to Zero
+        name: "Axis Y-2",
+        xValueFormatString: "####",
+        dataPoints: wait
+    },
+    {
+        type: "column",
+        showInLegend: true,
+        color:"rgba(0, 153, 153,1)",   
+        legendText: "Price($)",               
+        axisYType: "secondary",
+        toolTipContent: "Price : ${y}",
+        //axisYIndex: 0, //Defaults to Zero
+        name: "Axis Y2-1",
+        xValueFormatString: "####",
+        dataPoints: price
+    },
+    
+    ]
+    });
+
+    chart.render();
+    var chart = new CanvasJS.Chart("chartContainer4",{   
+		title:{
+        text: "Weather Prediction",
+        //fontFamily: "Raleway",
+        fontColor: "rgba(255,255,255,1)",
+        fontSize:20
+
+      },
+      legend: {
+       fontColor: "white"
+     },
+		backgroundColor: "rgba(0,0,0,0.9)",            
+        
+        toolTip: {
+        shared: true
+      },
+        axisX:{
+           
+            valueFormatString: "####",
+           // interval: 1,
+            display:false,
+           labelFontColor: "rgba(255,255,255,1)"
+        },
+        axisY:[{
+
+            
+            lineColor: "rgba(230, 92, 0,1)", 
+            titleFontColor: "rgba(230, 92, 0,1)",
+            labelFontColor: "rgba(230, 92, 0,1)"
+        },
+        {
+            
+            //logarithmic: true,
+            lineColor: "rgb(230, 230, 0)",
+            titleFontColor: "rgb(230, 230, 0)",
+            labelFontColor: "rgb(230, 230, 0)",
+            //"rgba(230, 92, 0,1)",
+        }],
+        axisY2:[{
+            
+            lineColor: "rgba(0, 153, 153,1)",
+            titleFontColor: "rgba(0, 153, 153,1)",
+            labelFontColor: "rgba(0, 153, 153,1)"
+        }],
+
+    data: [
+    {
+        type: "line",
+        showInLegend: true,
+        color:"rgba(230, 92, 0,0.8)",
+        legendText: "Temperature (celsius)",
+        //axisYIndex: 0, //Defaults to Zero
+        name: "Axis Y-1",
+        toolTipContent: "<strong>{label}</strong> <br/> Temperature : {y} C",
+        xValueFormatString: "####",
+        dataPoints: Temp
+    },
+    {
+        type: "spline",
+        showInLegend: true,
+        color:"rgb(230, 230, 0)",
+        legendText: "Humidity",
+        toolTipContent: "Humidity : {y}",
+        axisYIndex: 1, //Defaults to Zero
+        name: "Axis Y-2",
+        xValueFormatString: "####",
+        dataPoints: Hum
+    },
+    {
+        type: "line",
+        showInLegend: true,
+        color:"rgba(0, 153, 153,1)",   
+        legendText: "Pressure",               
+        axisYType: "secondary",
+        toolTipContent: "Pressure : {y}",
+        //axisYIndex: 0, //Defaults to Zero
+        name: "Axis Y2-1",
+        xValueFormatString: "####",
+        dataPoints: Pre
+    },
+    
+    ]
+    });
+
+    chart.render();
+var chart= new CanvasJS.Chart("chartContainer3", {
+	title:{
+        text: "Flights - Price - Time",
+        //fontFamily: "Raleway",
+        fontColor: "rgba(255,255,255,1)",
+        fontSize:20
+
+      },
+      backgroundColor: "rgba(0,0,0,0.9)", 
+      legend: {
+       fontColor: "white"
+     },
+     
+      axisY:{
+      	prefix: "$",
+        includeZero: false,
+        labelFontColor: "rgba(0, 153, 153,1)" ,
+        lineColor: "rgba(0, 153, 153,1)" ,
+        lineThickness: 3
+      }, 
+      toolTip: {
+        shared: true
+      },
+ 
+      axisY2:{
+        includeZero: false,
+        labelFontColor: "rgba(230, 92, 0,1)",
+        lineColor: "rgba(230, 92, 0,1)",
+        lineThickness: 3
+        
+      },
+      axisX: {
+      	labelFontColor: "rgba(0,0,0,0)",
+        lineThickness: 3
+      },
+
+      data: [
+      {
+        showInLegend: true,
+        color:"rgba(0, 153, 153,1)",
+        legendText: "Price($)",
+        hoverColor: "rgba(232,105,90,0.8)",
+            hoverColor: "orange",
+        toolTipContent: "<strong>{label}</strong> <br/> Price : ${y}",
+       type: "spline",  
+       lineThickness: 3,
+       dataPoints: price
+     },
+     {
+        showInLegend: true,
+        color:"rgba(230, 92, 0,1)",
+        hoverBackgroundColor: "rgba(232,105,90,0.8)",
+            hoverBorderColor: "orange",
+        legendText: "Travel Duration(In Hrs)",
+        toolTipContent: "Time : {y} Hrs",
+       type: "spline",  
+       axisYType: "secondary",
+       lineThickness: 3,
+       dataPoints: time_taken
+     }
+     ]
+   });
+chart.render();
+function toogleDataSeries(e){
+    if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+        e.dataSeries.visible = false;
+    } else{
+        e.dataSeries.visible = true;
+    }
+    chart.render();
+}
+}
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+</head>
+<body class="w3-light-grey w3-content" style="max-width:1600px">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-black w3-animate-left" style="z-index:3;width:200px;" id="mySidebar"><br>
+  <div class="w3-container">
+    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
+      <i class="fa fa-remove"></i>
+    </a>
+    <h4><b>TRAVEL GUIDE</b></h4><br><br>
+  </div>
+    <div class="w3-bar-block">
+    <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal">&nbsp;&nbsp;<i class="fa fa-th-large fa-fw w3-margin-right"></i><b>FLIGHTS</b></a> 
+    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><b>FLIGHT STATISTICS</b></a> 
+    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding">&nbsp;&nbsp;&nbsp;&nbsp;<b>SCHEDULE</b></a>
+    <a href="#weather" onclick="w3_close()" class="w3-bar-item w3-button w3-padding">&nbsp;&nbsp;&nbsp;&nbsp;<b>WEATHER</b></a> 
+    <a href="#analysis" onclick="w3_close()" class="w3-bar-item w3-button w3-padding">&nbsp;&nbsp;&nbsp;&nbsp;<b>ANALYSIS</b></a> 
+  </div>
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:180px">
+
+  <!-- Header -->
+
+  <header id="portfolio">
+    <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+    <br><br>
+    <form >
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+      From :
+      <input type="text" name="origin" placeholder="Origin City" required>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      To :
+      <input type="text" name="dest" placeholder="Destination City" required>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Depart On :
+      <input type="date" name="date" id="Test_Date" placeholder="DD/MM/YYYY" required>
+      <br>
+      <center><br><input type="submit" value="Search Flights"></center>  
+</form>
+
+<div class="w3-section w3-bottombar w3-padding-100 w3-black" style="width:1500px;"></div>
+<center><strong><h5>{{Origin}}&nbsp;-&nbsp;{{Dest}} FLIGHT DETAILS </h5></strong></center>
+</div>
+</header>
+   
+  
+  <div class="w3-container w3-padding-large w3-light-grey" style="margin-bottom:32px">
+    
+
+  </footer>
+  
+&nbsp;&nbsp;&nbsp;&nbsp;<div id="chartContainer" style="width: 45%; height: 400px;display: inline-block;"></div>
+&nbsp;&nbsp;&nbsp;&nbsp;<div id="chartContainer3" style="width: 50%; height: 400px;display: inline-block;"></div><br /><br/><br/>
+<header id = "about">
+<br/><br/>
+<center><div id="chartContainer2" style="width: 90%; height: 400px;display: inline-block;"></div></center><br />
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></header>
+  
+  <header id = "contact">
+  <br/>
+  <center><p><strong><h4>Flights scheduled from {{Origin}} &nbsp; - &nbsp;{{Dest}}</h4></strong></p></center>
+  <center><table style="width:90%">
+
+  <tr >
+    <th style="color:white;">Flight</th>
+    <th style="color:white;">Departure Time</th> 
+    <th style="color:white;">Arrival Time</th>
+    <th style="color:white;">Duration</th>
+  </tr>
+  {% for p in AddTime %}
+  <tr>
+    <td align="center">{{p.0}}</td>
+    <td align="center">{{p.1}}</td>
+    <td align="center">{{p.2}}</td>
+    <td align="center">{{p.3}}</td>
+  </tr>
+  {% endfor %}
+</table></center></header><br/>
+<header id = "weather">
+<br/><br/>
+<center><p><strong><h4>Estimated weather condition at {{Dest}}</h4></strong></p></center>
+<center><div id="chartContainer4" style="width: 90%; height: 400px;display: inline-block;"></div></center><br />
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script></header><br/><br/><br/>
+
+  <header id = "analysis">
+  <center><p><strong><h4>Choose the one that best suits your plan</h4></strong></p></center>
+  <center><table style="width:90%">
+
+  <tr >
+  <th>              </th>
+    <th style="color:white;">Flight</th> 
+    <th style="color:white;">Cost</th> 
+    <th style="color:white;">Departure Time</th> 
+    <th style="color:white;">Arrival Time</th>
+    <th style="color:white;">Duration</th>
+    <th style="color:white;">Stops</th>
+  </tr>
+  
+  <tr>
+  <td align="center">Cheapest Flight</td>
+    <td align="center">{{suggest.0.0}}</td>
+    <td align="center">$ {{suggest.0.1}}</td>
+    <td align="center">{{suggest.0.2}}</td>
+    <td align="center">{{suggest.0.3}}</td>
+    <td align="center">{{suggest.0.4}}</td>
+    <td align="center">{{suggest.0.5}}</td>
+  </tr>
+  <tr>
+  <td align="center">Fastest Flight</td>
+    <td align="center">{{suggest.1.0}}</td>
+    <td align="center">$ {{suggest.1.1}}</td>
+    <td align="center">{{suggest.1.2}}</td>
+    <td align="center">{{suggest.1.3}}</td>
+    <td align="center">{{suggest.1.4}}</td>
+    <td align="center">{{suggest.1.5}}</td>
+  </tr>
+  <tr>
+  <td align="center">Flight With Minimum Stops</td>
+    <td align="center">{{suggest.2.0}}</td>
+    <td align="center">$ {{suggest.2.1}}</td>
+    <td align="center">{{suggest.2.2}}</td>
+    <td align="center">{{suggest.2.3}}</td>
+    <td align="center">{{suggest.2.4}}</td>
+    <td align="center">{{suggest.2.5}}</td>
+  </tr>
+  
+</table></center><br><br></header>
+
+
+</body>
+</html>
+

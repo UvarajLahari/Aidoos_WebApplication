@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<title>Travel Guide</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+.container {
+  
+  
+}
+.centered {
+  text-align: center;
+  color: white;
+border : 1px solid black;
+  padding : 80px 100px 80px 100px;
+  background-color : rgb(0,0,0,0.9);
+  position: absolute;
+  top: 60%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+}
+</style>
+<script type="text/javascript">
+      
+      window.onload = function () { 
+            var currentDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+            var day = currentDate.getDate()
+            var month = currentDate.getMonth() + 1
+            var year = currentDate.getFullYear()
+            if (parseInt(day)<10){
+              day = "0"+day 
+            }
+            
+            d= year + "-" + month + "-" + day 
+            //document.write(d,'2019-10-07'== d)
+            document.getElementById("Test_Date").min= d;
+            // document.getElementById("test").innerHTML = d;
+         
+      } 
+    </script>
+<body class="w3-light-grey w3-content" style="max-width:1600px">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-black w3-animate-left" style="z-index:3;width:200px;" id="mySidebar"><br>
+  <div class="w3-container">
+  <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
+      <i class="fa fa-remove"></i>
+    </a>
+    <h4><b>TRAVEL GUIDE</b></h4><br><br>
+    
+  </div>
+    <div class="w3-bar-block">
+    <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-teal">&nbsp;&nbsp;<i class="fa fa-th-large fa-fw w3-margin-right"></i><b>FLIGHTS</b></a> 
+    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding">&nbsp;&nbsp;&nbsp;&nbsp;<b>ESTIMATES</b></a> 
+    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding">&nbsp;&nbsp;&nbsp;&nbsp;<b>SCHEDULE</b></a>
+    <a href="#weather" onclick="w3_close()" class="w3-bar-item w3-button w3-padding">&nbsp;&nbsp;&nbsp;&nbsp;<b>WEATHER</b></a> 
+    <a href="#analysis" onclick="w3_close()" class="w3-bar-item w3-button w3-padding">&nbsp;&nbsp;&nbsp;&nbsp;<b>ANALYSIS</b></a> 
+  </div>
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-grey w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main " style="margin-left:180px">
+
+  <!-- Header -->
+  <header id="portfolio">
+    <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+    <br><br>
+    <form >
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+      From :
+      <input type="text" name="origin" placeholder="Origin City" required>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      To :
+      <input type="text" name="dest" placeholder="Destination City" required>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Depart On :
+      <input type="date" name="date" id = "Test_Date" placeholder="DD/MM/YYYY" required>
+      <br>
+      <center><br><input type="submit" value="Search Flights"></center>  
+</form>
+
+<div class="w3-section w3-bottombar w3-padding-1500 w3-dark-grey" style="width:1500px;"></div>
+</div>
+</header>
+   
+  
+  <div class="w3-container w3-padding-large" style="margin-left:32px;width:1500px;">
+    
+
+  </footer>
+  <div class="container">
+  <img src="https://www.swedishnomad.com/wp-content/images/2016/03/Konsten-att-hitta-billiga-flygbiljetter.jpg" height="470" width="1040"><br>
+  <div class="centered"><strong>MAKE YOUR TRIP EASY AND<br><center>FLEXIBLE</center></strong></div>
+</div>
+  
+</div>
+</header>
+   <!--- 
+      <span class="w3-margin-right">Filter:</span> 
+      <button class="w3-button w3-black">ALL</button>
+      <button class="w3-button w3-white"><i class="fa fa-diamond w3-margin-right"></i>Design</button>
+      <button class="w3-button w3-white w3-hide-small"><i class="fa fa-photo w3-margin-right"></i>Photos</button>
+      <button class="w3-button w3-white w3-hide-small"><i class="fa fa-map-pin w3-margin-right"></i>Art</button>
+    </div>->
+    
+  
+  
+  <!- First Photo Grid-->
+  <div class="w3-row-padding">
+    <div class="w3-third w3-container w3-margin-bottom">
+      
+      <div class="w3-container w3-white">
+       
+      </div>
+    </div>
+    <div class="w3-third w3-container w3-margin-bottom">
+      
+      <div class="w3-container w3-white">
+      
+      </div>
+    </div>
+    <div class="w3-third w3-container">
+      
+      <div class="w3-container w3-white">
+       
+      </div>
+    </div>
+  </div>
+  
+  <!-- Second Photo Grid-->
+  <div class="w3-row-padding">
+    <div class="w3-third w3-container w3-margin-bottom">
+      
+      <div class="w3-container w3-white">
+      </div>
+    </div>
+    <div class="w3-third w3-container w3-margin-bottom">
+      
+      <div class="w3-container w3-white">
+       
+      </div>
+    </div>
+    <div class="w3-third w3-container">
+      
+      <div class="w3-container w3-white">
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  
+  <!-- Images of Me -->
+  
+
+  <div class="w3-container w3-padding-large" style="margin-bottom:32px">
+    
+      
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+
+</body>
+</html>
+
